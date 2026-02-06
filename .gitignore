@@ -1,0 +1,12 @@
+# Terragrunt / OpenTofu
+infra/**/.terragrunt-cache/
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# OS
+.DS_Store
+
+# PDF exports
+*.pdf
