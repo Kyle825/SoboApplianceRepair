@@ -57,7 +57,21 @@
           "Dishwasher Repair",
           "Stove Repair"
         ],
-        "priceRange": "$$"
+        "priceRange": "$$",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "17:00",
+            "closes": "21:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "09:00",
+            "closes": "17:00"
+          }
+        ]
       }
     </script>
 
@@ -100,11 +114,11 @@
           Expert Appliance Repair in Federal Hill &amp; Locust Point
         </h1>
         <p class="text-lg md:text-xl text-blue-200 mb-2">
-          Engineering Precision for Your Home
+          Expert Repair That Fits Your Professional Schedule
         </p>
         <p class="text-blue-300 mb-8 max-w-2xl mx-auto">
-          Fast, reliable fixes for washers, dryers, dishwashers, and stoves —
-          from a local engineer who lives in your neighborhood.
+          Most repair companies require you to take a half-day off work. SOBO
+          runs evenings and weekends — built for the 9-to-5 professional.
         </p>
         <a
           href="#request"
@@ -143,11 +157,12 @@
             </p>
           </div>
           <div class="bg-white rounded-lg shadow p-6">
-            <div class="text-4xl mb-3">🏠</div>
-            <h3 class="font-semibold text-lg mb-2">Property Manager Tested</h3>
+            <div class="text-4xl mb-3">🕐</div>
+            <h3 class="font-semibold text-lg mb-2">After-Work Hours</h3>
             <p class="text-gray-600 text-sm">
-              Kyle manages rental properties in the neighborhood. He's fixed
-              these same appliances in his own units — yours gets the same care.
+              Weekday evenings and weekends — no PTO required. A Senior Software
+              Engineer by day, bringing product-engineering precision to your
+              appliances after hours.
             </p>
           </div>
         </div>
@@ -263,8 +278,32 @@
       </div>
     </section>
 
+    <!-- Service Hours -->
+    <section class="bg-white border-t">
+      <div class="max-w-5xl mx-auto px-4 py-16 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Service Hours</h2>
+        <p class="text-gray-600 max-w-xl mx-auto mb-8">
+          Designed around your work schedule, not ours.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-6">
+          <div class="bg-gray-50 rounded-lg p-4">
+            <p class="font-semibold text-brand-700">Mon &ndash; Fri</p>
+            <p class="text-2xl font-bold mt-1">5:00 &ndash; 9:00 PM</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <p class="font-semibold text-brand-700">Sat &ndash; Sun</p>
+            <p class="text-2xl font-bold mt-1">9:00 AM &ndash; 5:00 PM</p>
+          </div>
+        </div>
+        <p class="text-gray-500 text-sm max-w-md mx-auto">
+          All requests are triaged between 8:00 &ndash; 9:00 PM daily.
+          You'll hear back the same evening.
+        </p>
+      </div>
+    </section>
+
     <!-- Lead Capture Form -->
-    <section id="request" class="bg-white border-t">
+    <section id="request" class="bg-gray-50 border-t">
       <div class="max-w-2xl mx-auto px-4 pt-16 pb-4 text-center">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           Request a Repair
@@ -309,7 +348,7 @@
           <p class="text-white font-bold text-lg mb-1">
             SOBO Appliance Repair LLC
           </p>
-          <p>Riverside, Baltimore, MD 21230</p>
+          <p>Locust Point / Federal Hill, MD 21230</p>
           <p class="mt-1">
             <a href="tel:+14433047069" class="text-accent-500 hover:underline"
               >(443) 304-7069</a
@@ -318,7 +357,7 @@
         </div>
         <div class="text-sm">
           <p>Serving Federal Hill, Locust Point &amp; Riverside</p>
-          <p>Zip code 21230 only</p>
+          <p>Mon&ndash;Fri 5&ndash;9 PM &bull; Sat&ndash;Sun 9 AM&ndash;5 PM</p>
           <p class="mt-2">
             &copy; 2026 SOBO Appliance Repair LLC. All rights reserved.
           </p>
