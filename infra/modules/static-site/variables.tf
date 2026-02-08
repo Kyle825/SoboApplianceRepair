@@ -44,3 +44,10 @@ variable "protonmail_dmarc_txt" {
   type        = string
   default     = "v=DMARC1; p=quarantine"
 }
+
+# --- Google ---
+
+variable "google_site_verification_txt" {
+  description = "Google Search Console site verification TXT record value"
+  type        = string
+}

@@ -78,6 +78,7 @@ resource "aws_route53_record" "txt" {
   records = [
     var.protonmail_verification_txt,
     var.protonmail_spf_txt,
+    var.google_site_verification_txt,
   ]
 }
 
