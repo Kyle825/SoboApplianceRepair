@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://soboappliancerepair.com/sitemap.xml
