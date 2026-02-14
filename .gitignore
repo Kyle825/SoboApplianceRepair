@@ -4,6 +4,7 @@ infra/**/.terragrunt-cache/
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
+issues/*
 
 # OS
 .DS_Store
