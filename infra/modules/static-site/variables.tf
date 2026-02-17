@@ -8,44 +8,41 @@ variable "github_pages_username" {
   type        = string
 }
 
-# --- Protonmail DNS values ---
+# --- Google Workspace DNS values ---
 
-variable "protonmail_verification_txt" {
-  description = "Protonmail domain verification TXT record value"
+variable "google_workspace_verification_txt" {
+  description = "Google Workspace domain verification TXT record value"
   type        = string
 }
 
-variable "protonmail_mx_records" {
-  description = "Protonmail MX records"
+variable "google_workspace_mx_records" {
+  description = "Google Workspace MX records"
   type = list(object({
     priority = number
     value    = string
   }))
   default = [
-    { priority = 10, value = "mail.protonmail.ch" },
-    { priority = 20, value = "mailsec.protonmail.ch" },
+    { priority = 1, value = "ASPMX.L.GOOGLE.COM" },
+    { priority = 5, value = "ALT1.ASPMX.L.GOOGLE.COM" },
+    { priority = 5, value = "ALT2.ASPMX.L.GOOGLE.COM" },
+    { priority = 10, value = "ALT3.ASPMX.L.GOOGLE.COM" },
+    { priority = 10, value = "ALT4.ASPMX.L.GOOGLE.COM" },
   ]
 }
 
-variable "protonmail_spf_txt" {
-  description = "SPF TXT record value for Protonmail"
+variable "google_workspace_spf_txt" {
+  description = "SPF TXT record value for Google Workspace"
   type        = string
-  default     = "v=spf1 include:_spf.protonmail.ch ~all"
+  default     = "v=spf1 include:_spf.google.com ~all"
 }
 
-variable "protonmail_dkim_cnames" {
-  description = "Protonmail DKIM CNAME records: map of selector name to CNAME target"
-  type        = map(string)
-  default     = {}
-}
-
-variable "protonmail_dmarc_txt" {
+variable "dmarc_txt" {
   description = "DMARC TXT record value"
   type        = string
   default     = "v=DMARC1; p=quarantine"
 }
 
-# --- Google ---
+# --- Google Search Console ---
 
 variable "google_site_verification_txt" {
   description = "Google Search Console site verification TXT record value"

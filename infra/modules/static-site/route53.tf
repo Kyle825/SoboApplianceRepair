@@ -52,7 +52,7 @@ resource "aws_route53_record" "www_cname" {
 }
 
 # ============================================================
-# Protonmail — MX Records
+# Google Workspace — MX Records
 # ============================================================
 
 resource "aws_route53_record" "mx" {
@@ -61,11 +61,11 @@ resource "aws_route53_record" "mx" {
   type    = "MX"
   ttl     = 3600
 
-  records = [for mx in var.protonmail_mx_records : "${mx.priority} ${mx.value}"]
+  records = [for mx in var.google_workspace_mx_records : "${mx.priority} ${mx.value}"]
 }
 
 # ============================================================
-# Protonmail — TXT Records (verification + SPF)
+# TXT Records (Google Workspace verification + SPF + Search Console)
 # Route53 requires a single TXT recordset per name
 # ============================================================
 
@@ -76,28 +76,14 @@ resource "aws_route53_record" "txt" {
   ttl     = 3600
 
   records = [
-    var.protonmail_verification_txt,
-    var.protonmail_spf_txt,
+    var.google_workspace_verification_txt,
+    var.google_workspace_spf_txt,
     var.google_site_verification_txt,
   ]
 }
 
 # ============================================================
-# Protonmail — DKIM CNAME Records
-# ============================================================
-
-resource "aws_route53_record" "dkim" {
-  for_each = var.protonmail_dkim_cnames
-
-  zone_id = aws_route53_zone.main.zone_id
-  name    = "${each.key}.${var.domain_name}"
-  type    = "CNAME"
-  ttl     = 3600
-  records = [each.value]
-}
-
-# ============================================================
-# Protonmail — DMARC TXT Record
+# DMARC TXT Record
 # ============================================================
 
 resource "aws_route53_record" "dmarc" {
@@ -105,5 +91,5 @@ resource "aws_route53_record" "dmarc" {
   name    = "_dmarc.${var.domain_name}"
   type    = "TXT"
   ttl     = 3600
-  records = [var.protonmail_dmarc_txt]
+  records = [var.dmarc_txt]
 }
