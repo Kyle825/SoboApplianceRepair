@@ -83,6 +83,39 @@ resource "aws_route53_record" "txt" {
 }
 
 # ============================================================
+# Google Workspace — CNAME verification (alternative to TXT)
+# ============================================================
+
+resource "aws_route53_record" "google_workspace_verification_cname" {
+  count   = var.google_workspace_verification_cname != null ? 1 : 0
+  zone_id = aws_route53_zone.main.zone_id
+  name    = "${var.google_workspace_verification_cname.name}.${var.domain_name}"
+  type    = "CNAME"
+  ttl     = 3600
+  records = [var.google_workspace_verification_cname.value]
+}
+
+# ============================================================
+# Google Workspace — DKIM TXT Record
+# ============================================================
+
+resource "aws_route53_record" "dkim" {
+  count   = var.google_workspace_dkim_txt != null ? 1 : 0
+  zone_id = aws_route53_zone.main.zone_id
+  name    = "google._domainkey.${var.domain_name}"
+  type    = "TXT"
+  ttl     = 3600
+
+  # DNS TXT strings have a 255-char limit; split long DKIM keys into chunks
+  records = [
+    join("\" \"", [
+      for i in range(0, ceil(length(var.google_workspace_dkim_txt) / 255.0)) :
+      substr(var.google_workspace_dkim_txt, i * 255, 255)
+    ])
+  ]
+}
+
+# ============================================================
 # DMARC TXT Record
 # ============================================================
 

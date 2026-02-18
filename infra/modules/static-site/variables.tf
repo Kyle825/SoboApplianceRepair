@@ -42,6 +42,25 @@ variable "dmarc_txt" {
   default     = "v=DMARC1; p=quarantine"
 }
 
+# --- Google Workspace CNAME verification (alternative to TXT) ---
+
+variable "google_workspace_verification_cname" {
+  description = "Google Workspace CNAME verification record (name → value)"
+  type = object({
+    name  = string
+    value = string
+  })
+  default = null
+}
+
+# --- Google Workspace DKIM ---
+
+variable "google_workspace_dkim_txt" {
+  description = "Google Workspace DKIM public key (TXT record at google._domainkey)"
+  type        = string
+  default     = null
+}
+
 # --- Google Search Console ---
 
 variable "google_site_verification_txt" {
