@@ -26,7 +26,7 @@ jobs:
       - name: Build site directory
         run: |
           mkdir _site
-          cp index.html pricing.html favicon.png CNAME sitemap.xml robots.txt _site/
+          cp index.html pricing.html services.html favicon.png CNAME sitemap.xml robots.txt _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
