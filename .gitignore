@@ -6,6 +6,9 @@ infra/**/.terragrunt-cache/
 .terraform.lock.hcl
 issues/*
 
+# Build output
+_site/
+
 # OS
 .DS_Store
 
