@@ -15,6 +15,7 @@ import html
 import json
 import os
 import shutil
+import subprocess
 import urllib.parse
 import urllib.request
 
@@ -142,6 +143,18 @@ BUILD_DIR = "_site"
 
 def main():
     os.makedirs(BUILD_DIR, exist_ok=True)
+
+    # Build Tailwind CSS (skipped gracefully if CLI is not installed locally)
+    css_out = os.path.join(BUILD_DIR, "style.css")
+    try:
+        subprocess.run(
+            ["tailwindcss", "-i", "src/input.css", "-o", css_out, "--minify"],
+            check=True,
+        )
+    except FileNotFoundError:
+        print("WARNING: tailwindcss CLI not found — CSS not rebuilt (use pre-built or install CLI)")
+    except subprocess.CalledProcessError as e:
+        print(f"WARNING: Tailwind CSS build failed: {e}")
 
     nav_template = open("_includes/nav.html").read()
     footer = open("_includes/footer.html").read()
