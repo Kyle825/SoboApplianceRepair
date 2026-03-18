@@ -76,13 +76,13 @@ def _build_reviews_html(api_data):
         rating = api_data["rating"]
         total = api_data["total"]
         cards = []
-        for r in api_data["reviews"][:5]:
+        for r in api_data["reviews"][:3]:
             author = html.escape(r.get("author_name", ""))
             text = html.escape(r.get("text", ""))
             cards.append(
                 f'          <div class="bg-white border rounded-xl p-6">\n'
                 f'            <p class="text-amber-400 mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</p>\n'
-                f'            <p class="text-gray-700 text-sm leading-relaxed mb-4">&ldquo;{text}&rdquo;</p>\n'
+                f'            <p class="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-5">&ldquo;{text}&rdquo;</p>\n'
                 f'            <p class="text-xs text-gray-400 font-medium">{author} &middot; Google review</p>\n'
                 f'          </div>'
             )
@@ -145,6 +145,7 @@ def main():
 
     nav_template = open("_includes/nav.html").read()
     footer = open("_includes/footer.html").read()
+    mobile_bar_template = open("_includes/mobile-bar.html").read()
 
     # Fetch reviews once (used only for index.html)
     api_data = _fetch_place_reviews()
@@ -171,9 +172,14 @@ def main():
                 'href="#" class="text-lg',
             )
 
+        mobile_bar = mobile_bar_template
+        if name == "index":
+            mobile_bar = mobile_bar.replace('href="index.html#request"', 'href="#request"')
+
         content = content.replace("<!-- @@NAV@@ -->", nav)
         content = content.replace("<!-- @@FOOTER@@ -->", footer)
         content = content.replace("<!-- @@REVIEWS@@ -->", reviews_html)
+        content = content.replace("<!-- @@MOBILE_BAR@@ -->", mobile_bar)
         content = content.replace("@@AGGREGATE_RATING_PLACEHOLDER@@", aggregate_rating_json)
 
         with open(os.path.join(BUILD_DIR, page), "w") as f:

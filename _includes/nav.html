@@ -1,9 +1,15 @@
+    <style>
+      details > summary { list-style: none; }
+      details > summary::-webkit-details-marker { display: none; }
+    </style>
     <nav class="bg-brand-800 text-white sticky top-0 z-50 shadow-md">
-      <div class="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <a href="index.html" class="text-lg font-bold tracking-tight"
           >SOBO Appliance Repair</a
         >
-        <div class="flex items-center gap-4">
+
+        <!-- Desktop links (hidden on mobile) -->
+        <div class="hidden md:flex items-center gap-4">
           <a
             href="services.html"
             data-nav="services" class="text-blue-200 hover:text-white font-medium transition"
@@ -23,5 +29,33 @@
             Request a Repair
           </a>
         </div>
+
+        <!-- Mobile hamburger -->
+        <details class="md:hidden relative">
+          <summary
+            class="cursor-pointer select-none p-2 -mr-2 rounded hover:bg-brand-700 transition"
+            aria-label="Open menu"
+          >
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </summary>
+          <div class="absolute right-0 top-full mt-2 bg-brand-800 border border-white/10 rounded-xl shadow-xl py-2 w-52 z-50">
+            <a
+              href="services.html"
+              data-nav="services" class="text-blue-200 hover:text-white block px-5 py-3 font-medium transition"
+            >Services</a>
+            <a
+              href="pricing.html"
+              data-nav="pricing" class="text-blue-200 hover:text-white block px-5 py-3 font-medium transition"
+            >Pricing</a>
+            <div class="px-3 pb-2 pt-1">
+              <a
+                href="index.html#request"
+                class="block bg-accent-500 hover:bg-accent-600 text-brand-800 font-semibold px-4 py-2.5 rounded text-center transition"
+              >Request a Repair</a>
+            </div>
+          </div>
+        </details>
       </div>
     </nav>
