@@ -20,6 +20,7 @@ import urllib.parse
 import urllib.request
 
 GOOGLE_PLACES_API_KEY = os.environ.get("GOOGLE_PLACES_API_KEY", "")
+FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "")
 GOOGLE_REVIEW_URL = "https://g.page/r/Cc6vDXUxByncEAI/review"
 
 _STATIC_REVIEWS = [
@@ -151,8 +152,8 @@ def main():
             ["tailwindcss", "-i", "src/input.css", "-o", css_out, "--minify"],
             check=True,
         )
-    except FileNotFoundError:
-        print("WARNING: tailwindcss CLI not found — CSS not rebuilt (use pre-built or install CLI)")
+    except (FileNotFoundError, PermissionError):
+        print("WARNING: tailwindcss CLI not found or not executable — CSS not rebuilt (use pre-built or install CLI)")
     except subprocess.CalledProcessError as e:
         print(f"WARNING: Tailwind CSS build failed: {e}")
 
@@ -189,6 +190,7 @@ def main():
         if name == "index":
             mobile_bar = mobile_bar.replace('href="index.html#request"', 'href="#request"')
 
+        content = content.replace("@@FORM_ENDPOINT@@", FORM_ENDPOINT)
         content = content.replace("<!-- @@NAV@@ -->", nav)
         content = content.replace("<!-- @@FOOTER@@ -->", footer)
         content = content.replace("<!-- @@REVIEWS@@ -->", reviews_html)
