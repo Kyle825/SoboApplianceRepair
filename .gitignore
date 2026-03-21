@@ -6,3 +6,6 @@ _site/
 
 # PDF exports
 *.pdf
+
+# Google Apps Script (keep local only)
+*.gs

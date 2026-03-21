@@ -408,6 +408,13 @@
             <textarea id="issue" name="issue" rows="3" required placeholder="e.g. Fridge is warm but freezer is still cold..." class="w-full p-3 border border-gray-300 rounded bg-gray-50 focus:bg-white focus:ring-brand-700 focus:border-brand-700 transition-colors"></textarea>
           </div>
 
+          <div>
+            <label for="photos" class="block text-sm font-medium text-gray-700 mb-1">Photos <span class="text-gray-400 font-normal">(optional — up to 3)</span></label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-brand-700 file:text-white hover:file:bg-brand-800 cursor-pointer">
+            <p class="text-xs text-gray-400 mt-1">Helpful: error codes, the appliance nameplate, or what's visibly wrong. Max 5 MB per photo.</p>
+            <p id="photoWarning" class="hidden text-xs text-red-600 mt-1">One or more photos exceed 5 MB — please choose smaller files or skip.</p>
+          </div>
+
           <div class="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 flex gap-3 items-start">
             <span class="text-amber-500 text-lg leading-tight mt-0.5">⚠</span>
             <p class="text-sm text-amber-800">All appointments require an <strong>$85 diagnostic deposit</strong> to lock in your time slot — 100% credited toward your repair labor.</p>
@@ -429,24 +436,62 @@
     </section>
 
     <script>
+      // Read a File as base64, returns a Promise
+      function readFileAsBase64(file) {
+        return new Promise(function(resolve, reject) {
+          var reader = new FileReader()
+          reader.onload = function(e) { resolve(e.target.result.split(",")[1]) }
+          reader.onerror = reject
+          reader.readAsDataURL(file)
+        })
+      }
+
       document.getElementById("soboForm").addEventListener("submit", function (e) {
         e.preventDefault()
         var form = this
         var btn = document.getElementById("submitBtn")
         var errorMsg = document.getElementById("formError")
         var successMsg = document.getElementById("successMsg")
+        var photoWarning = document.getElementById("photoWarning")
 
-        btn.textContent = "Sending\u2026"
+        // Validate photo sizes before doing anything
+        var photoInput = document.getElementById("photos")
+        var files = Array.from(photoInput.files).slice(0, 3)
+        var oversized = files.some(function(f) { return f.size > 5 * 1024 * 1024 })
+        if (oversized) {
+          photoWarning.classList.remove("hidden")
+          return
+        }
+        photoWarning.classList.add("hidden")
+
+        btn.textContent = files.length > 0 ? "Uploading\u2026" : "Sending\u2026"
         btn.disabled = true
         btn.classList.add("opacity-50", "cursor-not-allowed")
         errorMsg.classList.add("hidden")
 
-        fetch("@@FORM_ENDPOINT@@", {
-          method: "POST",
-          body: new URLSearchParams(new FormData(form)),
+        // Build payload: text fields + base64 photos
+        var formData = new FormData(form)
+        var payload = {}
+        formData.forEach(function(val, key) {
+          if (key !== "photos") payload[key] = val
         })
-          .then(function (r) { return r.json() })
-          .then(function (data) {
+
+        // Encode photos then submit
+        Promise.all(files.map(function(f) {
+          return readFileAsBase64(f).then(function(b64) {
+            return { name: f.name, type: f.type, data: b64 }
+          })
+        })).then(function(photos) {
+          if (photos.length) payload.photos = photos
+
+          return fetch("@@FORM_ENDPOINT@@", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          })
+        })
+          .then(function(r) { return r.json() })
+          .then(function(data) {
             if (data.result === "success") {
               form.reset()
               btn.style.display = "none"
@@ -455,9 +500,9 @@
               throw new Error(data.error || "script error")
             }
           })
-          .catch(function (err) {
+          .catch(function(err) {
             console.error("Form submission error:", err)
-            btn.textContent = "Submit Request"
+            btn.textContent = "Send My Request"
             btn.disabled = false
             btn.classList.remove("opacity-50", "cursor-not-allowed")
             errorMsg.classList.remove("hidden")
