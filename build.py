@@ -210,7 +210,7 @@ def main():
         if name == "index":
             mobile_bar = mobile_bar.replace('href="index.html#request"', 'href="#request"')
 
-        content = content.replace("<!-- @@VACATION_BANNER@@ -->", vacation_banner)
+        nav = nav.replace("<!-- @@VACATION_BANNER@@ -->", vacation_banner)
         content = content.replace("@@FORM_ENDPOINT@@", FORM_ENDPOINT)
         content = content.replace("<!-- @@NAV@@ -->", nav)
         content = content.replace("<!-- @@FOOTER@@ -->", footer)
