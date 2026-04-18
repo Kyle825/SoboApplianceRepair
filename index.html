@@ -578,6 +578,12 @@
               </p>
             </div>
 
+            <!-- honeypot: hidden from humans, bots fill it -->
+            <div style="display:none" aria-hidden="true">
+              <label for="website">Leave this blank</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
             <button
               type="submit"
               id="submitBtn"
