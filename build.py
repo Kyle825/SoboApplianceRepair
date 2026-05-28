@@ -139,15 +139,15 @@ def _build_aggregate_rating_json(api_data):
 
 _VACATION_BANNER = """\
     <div id="vacation-banner" style="display:none" class="bg-amber-400 text-brand-900 text-sm font-medium text-center px-4 py-2.5">
-      <strong>Vacation Notice (Apr 15&ndash;29):</strong>
+      <strong>Out of Town (Jun 1&ndash;4):</strong>
       No in-home service calls during this period &mdash; calls &amp; messages are still monitored and will be answered.
-      Scheduling resumes April&nbsp;30.
+      Scheduling resumes June&nbsp;5.
     </div>
     <script>
       (function(){
         var d=new Date(),y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
-        var after =(y>2026)||(y===2026&&m>4)||(y===2026&&m===4&&day>=15);
-        var before=(y<2026)||(y===2026&&m<4)||(y===2026&&m===4&&day<=29);
+        var after =(y>2026)||(y===2026&&m>6)||(y===2026&&m===6&&day>=1);
+        var before=(y<2026)||(y===2026&&m<6)||(y===2026&&m===6&&day<=4);
         if(after&&before)document.getElementById('vacation-banner').style.display='';
       })();
     </script>"""
